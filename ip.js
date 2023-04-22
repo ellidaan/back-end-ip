@@ -3,7 +3,7 @@ const { MongoClient} = require('mongodb')
 const url ='mongodb+srv://ellidaanx:Mot2passe@ip.7wkf38t.mongodb.net/test'
 const dbName = 'ip';
 const collectionName = 'ips';
-const client = new MongoClient(url);
+
 
 
 const app = express();
@@ -12,8 +12,10 @@ const app = express();
 
 app.get('/', (req, res) => {
   const ip = req.socket.remoteAddress;
-  res.send(`Votre adresse IP publique est : ${ip}`);
+  res.json(`Votre adresse IP publique est : ${ip}`);
 });
+
+
 
 
 app.get('/i', async(req, res) => {

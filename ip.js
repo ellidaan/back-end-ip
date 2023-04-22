@@ -18,8 +18,8 @@ app.get('/', async(req, res) => {
     const collection = db.collection(collectionName);
   
  
-  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-    const ips = collection.insertOne({ip: req.socket.remoteAddress});
+    const ip = req.socket.remoteAddress;
+    const ips = collection.insertOne({ipss: ip});
   res.json(`Votre adresse IP publique est : ${ip}`);
   }
   catch (err) {

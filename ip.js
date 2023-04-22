@@ -7,7 +7,7 @@ const cors = require('cors'); // Importer le module cors
 app.use(cors())
 
 
-const url ="mongodb://proxeam:dGfkufEw3MibQXfuaWECJn3kArKuosS74TU0ixvad4voEhmFjFy1I4iFMPtgHMkb2B5bbqKjmoryACDboOQZkQ==@proxeam.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@proxeam@";
+const url ="mongodb+srv://ellidaanx:Mot2passe@ip.7wkf38t.mongodb.net/test";
 const dbName = "ip";
 const collectionName = "ips";
 const client = new MongoClient(url);

@@ -7,15 +7,20 @@ const collectionName = 'ips';
 const cors = require('cors');
 app.use(cors());
 
-
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
   const client = new MongoClient(url);
   const db = client.db(dbName);
   const collection = db.collection(collectionName);
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-  const ips= collection.insertOne({ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress})
-
-
+  const existingIp = await collection.findOne({ ip: ip }); // Vérifie si l'adresse IP est déjà présente dans la collection
+  if (existingIp) {
+    console.log(`IP ${ip} already exists in the collection`);
+    res.send(existingIp.ip);
+  } else {
+    const newIp = await collection.insertOne({ ip: ip });
+    console.log(`Inserted new IP ${ip} into the collection`);
+    res.send(newIp.ops[0].ip);
+  }
 });
 
 

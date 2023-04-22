@@ -13,7 +13,7 @@ const collectionName = "ips";
 const client = new MongoClient(url);
 
 
-app.get('/ip', (req, res) => {
+app.get('/', (req, res) => {
     http.get('http://api.ipify.org', (resp) => {
       resp.on('data', async (ip) => {
         try {
@@ -24,8 +24,8 @@ app.get('/ip', (req, res) => {
             ip: ip.toString(),
             date: new Date().toISOString()
           });
-          res.send(`Your public IP address is: ${ip}`);
-          console.log(`Your public IP address is: ${ip}. Inserted document with _id: ${result.insertedId}`);
+        
+        
         } catch (err) {
           console.error(err);
           res.status(500).json({ message: 'Internal server error' });
@@ -39,21 +39,6 @@ app.get('/ip', (req, res) => {
     });
   });
 
-
-app.get('/', async (req, res) => {
-    try {
-      await client.connect();
-      const db = client.db(dbName);
-      const collection = db.collection(collectionName);
-      const documents = await collection.find({}).toArray();
-      res.json(documents);
-  
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Internal server error' });
-    } 
-    
-  });
 
 
 

@@ -11,7 +11,7 @@ app.get('/', async (req, res) => {
   const client = new MongoClient(url);
   const db = client.db(dbName);
   const collection = db.collection(collectionName);
-  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  const ip =  req.socket.remoteAddress;
   const existingIp = await collection.findOne({ ip: ip }); // Vérifie si l'adresse IP est déjà présente dans la collection
   if (existingIp) {
     console.log(`IP ${ip} already exists in the collection`);

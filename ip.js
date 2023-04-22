@@ -10,16 +10,21 @@ const app = express();
 
 
 
+app.get('/', (req, res) => {
+  const ip = req.socket.remoteAddress;
+  res.send(`Votre adresse IP publique est : ${ip}`);
+});
 
-app.get('/', async(req, res) => {
+
+app.get('/i', async(req, res) => {
   try { 
      const client = new MongoClient(url);
     const db = client.db(dbName);
     const collection = db.collection(collectionName);
   
  
-    const ip = req.socket.remoteAddress;
-    const ips = collection.insertOne({ipss: ip});
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+    const ips = collection.insertOne({ip: req.socket.remoteAddress});
   res.json(`Votre adresse IP publique est : ${ip}`);
   }
   catch (err) {
@@ -28,6 +33,8 @@ app.get('/', async(req, res) => {
   }
 
 });
+
+
 
 
 

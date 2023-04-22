@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
             ip: ip.toString(),
             date: new Date().toISOString()
           });
-        
+          res.json(`Your public IP address is: ${ip}`);
         
         } catch (err) {
           console.error(err);

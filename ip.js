@@ -19,7 +19,6 @@ app.get('/', async (req, res) => {
   } else {
     const newIp = await collection.insertOne({ ip: ip });
     console.log(`Inserted new IP ${ip} into the collection`);
-    res.send(newIp.ops[0].ip);
   }
 });
 

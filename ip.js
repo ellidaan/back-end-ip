@@ -3,21 +3,24 @@ const { MongoClient} = require('mongodb')
 const url ='mongodb+srv://ellidaanx:Mot2passe@ip.7wkf38t.mongodb.net/test'
 const dbName = 'ip';
 const collectionName = 'ips';
-
+const client = new MongoClient(url);
 
 
 const app = express();
 
 
 
-app.get('/', (req, res) => {
-   const client = new MongoClient(url);
-    const db = client.db(dbName);
-    const collection = db.collection(collectionName);
-    const ips = collection.insertOne({ip: req.socket.remoteAddress});
+app.get('/ipss', async(req, res) => {
+  try {
+ 
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  res.json(`Votre adresse IP publique est : ${ip}`);
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Internal server error' });
+  }
 
-  const ip = req.socket.remoteAddress;
-  res.send(`Votre adresse IP publique est : ${ip}`);
 });
 
 
